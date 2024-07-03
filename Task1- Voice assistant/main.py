@@ -27,14 +27,14 @@ def recognize_speech_from_mic():
     
     for _ in range(retry_count):
         with sr.Microphone() as source:
-            r.adjust_for_ambient_noise(source, duration=1)  # Reduced from 5 to 1 second
+            r.adjust_for_ambient_noise(source, duration=1)  
             print("Listening...")
             try:
-                audio = r.listen(source, timeout=5)  # Reduced timeout from 10 to 5 seconds
+                audio = r.listen(source, timeout=5)  
                 print("Audio captured, recognizing...")
                 text = r.recognize_google(audio)
                 print(f"Recognized: {text}")
-                return text.lower()  # Convert recognized text to lowercase
+                return text.lower()  
             except sr.WaitTimeoutError:
                 print("Listening timed out while waiting for phrase to start")
                 continue
@@ -57,7 +57,7 @@ def get_current_time_and_date():
 
 # Function to get weather updates
 def get_weather(city):
-    api_key = "c0de0c8b5b2970b04b88b1d8192e4dd7"  # Replace with your OpenWeatherMap API key
+    api_key = "c0de0c8b5b2970b04b88b1d8192e4dd7"  
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = f"{base_url}q={city}&appid={api_key}&units=metric"
     
@@ -83,23 +83,18 @@ class Inflow:
         self.driver.get("https://www.wikipedia.org")
 
         try:
-            # Wait until the search input is visible
             search = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((By.ID, "searchInput"))
             )
             search.click()
             search.send_keys(query)
 
-            # Wait until the search button is clickable
+          
             enter = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, '//*[@id="search-form"]/fieldset/button'))
             )
-            enter.click()
-
-            # Wait for the page to load
-            time.sleep(5)  # Adjust delay as needed
-
-            # Extract and read the first paragraph
+            enter.click()           
+            time.sleep(5)  
             soup = BeautifulSoup(self.driver.page_source, 'html.parser')
             paragraphs = soup.find_all('p')
             if paragraphs:
@@ -112,7 +107,6 @@ class Inflow:
         except Exception as e:
             print(f"Error: {e}")
 
-# Main script execution
 if __name__ == "__main__":
     speak("Hi there. I am your voice assistant. How are you?")
 
